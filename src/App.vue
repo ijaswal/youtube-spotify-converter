@@ -1,60 +1,76 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+  <div id="app">
+    <v-app>
+      <v-card :elevation="5" class="mx-auto mt-12" width="90%">
+        <v-container fluid>
+          <v-tabs fixed-tabs>
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab v-for="tab of tabs" :key="tab.name" :to="tab.route" class="primary--text">
+              <v-icon>{{tab.icon}}</v-icon>
+            </v-tab>
+            <v-tab-item v-for="tab of tabs" :key="tab.name" :value="tab.route">
+              <router-view></router-view>
+            </v-tab-item>
+          </v-tabs>
+        </v-container>
+      </v-card>
+    </v-app>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      activeTab: "/",
+      tabs: [
+        {
+          name: "Home",
+          icon: "mdi-account-box",
+          route: "/"
+        },
+        {
+          name: "Work Experience",
+          icon: "fas fa-briefcase",
+          route: "/experience"
+        },
+        {
+          name: "Playlist Converter",
+          icon: "fas fa-exchange-alt",
+          route: "/converter"
+        },
+        {
+          name: "Contact Me",
+          icon: "mdi-phone",
+          route: "/contact"
+        }
+      ]
+    };
+  }
 };
 </script>
+
+
+<style lang="scss">
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  background-image: url("./assets/interlaced.png");
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>
